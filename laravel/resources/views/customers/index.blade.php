@@ -63,17 +63,14 @@
                         <td>{{$c->status_nikah}}</td>
                         <td>{{$c->gaji}}</td>
                         <td>
-                            <a href="{{ route('customers.show', $c->id) }}" class="view" title="View">
-                                <i class="material-icons">&#xE417;</i>
-                            </a>
-                            <a href="{{ route('customers.edit', $c->id) }}" class="edit">
-                                <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                            </a>
+                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('customers.destroy', $c->id) }}" method="POST">
+                            <a href="{{ route('customers.show', $c->id) }}" class="btn btn-sm btn-dark">SHOW</a>
+                            <a href="{{ route('customers.edit', $c->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                            
                             @csrf
                             @method('DELETE')
-                            <a class="delete">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                            </a>
+                            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                        </form>
                         </td>
                     </tr>
                     @empty

@@ -127,4 +127,23 @@ class CustomersSQLController extends Controller
         //redirect to index
         return redirect()->route('customers.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
+
+
+    /**
+     * destroy
+     *
+     * @param  mixed $post
+     * @return void
+     */
+    public function destroy($id): RedirectResponse
+    {
+        //get data by ID
+        $c = Customers::findOrFail($id);
+
+        //delete data
+        $c->delete();
+
+        //redirect to index
+        return redirect()->route('customers.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
 }
