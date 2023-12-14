@@ -11,9 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
+    public function create()
+    {
+        return view('customers.create');
+    }
 
 
-    /* ================================================================== */
+    /* ==================================================================
+                                                API
+    ==================================================================
+     */
 
 
     /**

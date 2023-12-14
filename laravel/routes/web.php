@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
+
+// Route::get('/customers/create', 'CustomersSQLController@create')
+// ->name('customers.create');
+// Route::post('/customers', 'CustomersSQLController@store')
+// ->name('customers.store');
+// Route::get('/customers', 'CustomersSQLController@index')
+// ->name('customers.index');
+
+Route::resource('/customers', \App\Http\Controllers\SQL\CustomersSQLController::class);
+
+
