@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Data Customer</title>
+    <title>Edit Data Customer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body style="background: lightgray">
@@ -14,32 +14,24 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <form action="{{ route('customers.store') }}" method="POST" enctype="multipart/form-data">
-                        
-                        <div class="modal-header">						
-						<h4 class="modal-title">Tambah Customer</h4>
-						<!-- <button href="{{ route('customers.index') }}" type="button" class="close" aria-hidden="true">&times;</button> -->
-                        <a href="{{ route('customers.index') }}" class="btn btn-sm btn-danger">
-                            <span>X</span>
-                        </a>
-					</div>
+                        <form action="{{ route('customers.update', $c->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
 
-                    @csrf
-
-					<div class="modal-body">
+                            <div class="modal-body">
                         <div class="form-group">
 							<label for="customer_id">ID Customer</label>
 							<input type="text" class="form-control @error('customer_id') is-invalid @enderror" 
-                            id="customer_id" name="customer_id" placeholder="Masukkan ID Customer" value="{{ old('customer_id') }}">
+                            id="customer_id" name="customer_id" value="{{ old('customer_id', $c->customer_id) }}" placeholder="Masukkan ID Customer">
                             @error('customer_id')
-                                <div class="text-danger">{{ $message }}</div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
 						</div>				
 
 						<div class="form-group">
 							<label for="nama_customer">Nama</label>
 							<input type="text" class="form-control @error('nama_customer') is-invalid @enderror"
-                            id="nama_customer" name="nama_customer" placeholder="Masukkan Nama Customer" value="{{ old('nama_customer') }}">
+                            id="nama_customer" name="nama_customer" value="{{ old('nama_customer', $c->nama_customer) }}" placeholder="Masukkan Nama Customer">
                             @error('nama_customer')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror>
@@ -48,7 +40,7 @@
                         <div class="form-group">
 							<label for="Tanggal_lahir">Tanggal Lahir</label>
 							<input type="date" class="form-control @error('Tanggal_lahir') is-invalid @enderror"
-                            id="Tanggal_lahir" name="Tanggal_lahir" placeholder="Masukkan Tanggal Lahir" value="{{ old('Tanggal_lahir') }}">
+                            id="Tanggal_lahir" name="Tanggal_lahir" value="{{ old('Tanggal_lahir', $c->Tanggal_lahir) }}" placeholder="Masukkan Tanggal Lahir">
                             @error('Tanggal_lahir')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror>
@@ -57,7 +49,7 @@
                         <div class="form-group">
 							<label for="Provinsi_alamat">Provinsi</label>
 							<input type="text" class="form-control @error('Provinsi_alamat') is-invalid @enderror"
-                            id="Provinsi_alamat" name="Provinsi_alamat" placeholder="Masukkan Provinsi" value="{{ old('Provinsi_alamat') }}">
+                            id="Provinsi_alamat" name="Provinsi_alamat" value="{{ old('Provinsi_alamat', $c->Provinsi_alamat) }}" placeholder="Masukkan Provinsi">
                             @error('Provinsi_alamat')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror>
@@ -67,12 +59,12 @@
 							<label>Jenis Kelamin</label>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="jenis_kelamin" id="laki_laki" value="L"
-                                {{ old('jenis_kelamin')=='L' ? 'checked': '' }}>
+                                {{ old('jenis_kelamin', $c->jenis_kelamin)=='L' ? 'checked': '' }}>
                                 <label class="form-check-label" for="laki_laki">Laki-laki</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="P" 
-                                {{ old('jenis_kelamin')=='P' ? 'checked': '' }}>
+                                {{ old('jenis_kelamin', $c->jenis_kelamin)=='P' ? 'checked': '' }}>
                                 <label class="form-check-label" for="perempuan">Perempuan</label>
                             </div>
                             @error('jenis_kelamin')
@@ -84,17 +76,15 @@
 							<label for="status_nikah">Status Nikah</label>
 							<select class="form-control" name="status_nikah" id="status_nikah">
                                 <option value="Kawin"
-                                {{ old('status_nikah')=='Kawin' ? 'selected': '' }}>
+                                {{ old('status_nikah', $c->status_nikah)=='Kawin' ? 'selected': '' }}>
                                     Kawin
                                 </option>
-                                
                                 <option value="Belum Kawin"
-                                {{ old('status_nikah')=='Belum Kawin' ? 'selected': '' }}>
+                                {{ old('status_nikah', $c->status_nikah)=='Belum Kawin' ? 'selected': '' }}>
                                     Belum Kawin
                                 </option>
-                                
                                 <option value="Janda/Duda"
-                                {{ old('status_nikah')=='Janda/Duda' ? 'selected': '' }}>
+                                {{ old('status_nikah', $c->status_nikah)=='Janda/Duda' ? 'selected': '' }}>
                                     Janda/Duda
                                 </option>
                             </select>
@@ -106,17 +96,14 @@
                         <div class="form-group">
 							<label for="gaji">Gaji</label>
 							<input type="text" class="form-control @error('gaji') is-invalid @enderror"
-                            id="gaji" name="gaji" placeholder="Masukkan Gaji" value="{{ old('gaji') }}">
+                            id="gaji" name="gaji" value="{{ old('gaji', $c->gaji) }}" placeholder="Masukkan Gaji">
                             @error('gaji')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror>
 						</div>					
 					</div>
 
-                        <!-- <a href="{{ route('customers.index') }}" class="btn btn-success">
-                            <span>SIMPAN</span>
-                        </a> -->
-                            <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
+                            <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <!-- <button type="reset" class="btn btn-md btn-warning">RESET</button> -->
 
                         </form> 
@@ -126,7 +113,7 @@
         </div>
     </div>
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 

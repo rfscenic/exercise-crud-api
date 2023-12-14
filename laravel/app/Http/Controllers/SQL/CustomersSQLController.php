@@ -7,6 +7,7 @@ use App\Models\Customers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class CustomersSQLController extends Controller
 {
@@ -44,12 +45,12 @@ class CustomersSQLController extends Controller
     {
         //validate form
         $this->validate($request, [
-            'customer_id'       => 'required|unique:customers',
+            'customer_id'       => 'required|',
             'nama_customer'     => 'required',
             'Tanggal_lahir'     => 'required|date',
             'Provinsi_alamat'   => 'required',
             'jenis_kelamin'     => 'required|in:P,L',
-            'status_nikah'      => 'required|in:Kawin, Belum Kawin, Janda/Duda',
+            'status_nikah'      => 'required',
             'gaji'              => 'required',
         ]);
 
@@ -76,14 +77,54 @@ class CustomersSQLController extends Controller
      * @param  mixed $id
      * @return View
      */
-    public function show(string $customer_id): View
+    public function show(string $id): View
     {
-        //get post by customer_id
-        $c = Customers::findOrFail($customer_id);
+        //get data by id
+        $c = Customers::findOrFail($id);
 
         //render view with customers
         return view('customers.show', compact('c'));
     }
 
-    
+     /**
+     * edit
+     *
+     * @param  mixed $id
+     * @return View
+     */
+    public function edit(string $id): View
+    {
+        //get data by ID
+        $c = Customers::findOrFail($id);
+
+        //render view with customers
+        return view('customers.edit', compact('c'));
+    }
+
+    /**
+     * update
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, $id): RedirectResponse
+    {
+        //validate form
+        $this->validate($request, [
+            'customer_id'       => 'required',
+            'nama_customer'     => 'required',
+            'Tanggal_lahir'     => 'required|date',
+            'Provinsi_alamat'   => 'required',
+            'jenis_kelamin'     => 'required|in:P,L',
+            'status_nikah'      => 'required',
+            'gaji'              => 'required',
+        ]);
+
+        //get data by ID
+        $c = Customers::findOrFail($id);
+
+        //redirect to index
+        return redirect()->route('customers.index')->with(['success' => 'Data Berhasil Diubah!']);
+    }
 }

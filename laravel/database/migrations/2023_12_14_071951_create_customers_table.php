@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            // $table->id();
+            $table->id();
             $table->integer('customer_id');
             $table->char('nama_customer');
             $table->date('Tanggal_lahir');
@@ -27,8 +27,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('customers');
     }
 };

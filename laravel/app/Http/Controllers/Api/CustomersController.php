@@ -81,9 +81,9 @@ class CustomersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customers $customer_id)
+    public function show(Customers $id)
     {
-        $data = Customers::find($customer_id);
+        $data = Customers::find($id);
         if($data){
             return response()->json([
                 'status'=>true,
@@ -101,9 +101,9 @@ class CustomersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customers $customer_id)
+    public function update(Request $request, Customers $id)
     {
-        $dataCustomers = Customers::find($customer_id);
+        $dataCustomers = Customers::find($id);
         if(empty($dataCustomers)){
             return response()->json([
                 'status'    => false,
@@ -149,9 +149,9 @@ class CustomersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customers $customer_id)
+    public function destroy(Customers $id)
     {
-        $dataCustomers = Customers::find($customer_id);
+        $dataCustomers = Customers::find($id);
         if(empty($dataCustomers)){
             return response()->json([
                 'status'    => false,
