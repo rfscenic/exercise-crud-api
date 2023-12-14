@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
+
+
+    /* ================================================================== */
+
+
     /**
      * Display a listing of the resource.
      */
