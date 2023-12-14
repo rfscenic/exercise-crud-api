@@ -25,14 +25,10 @@
 						<h2>Data <b>Customer</b></h2>
 					</div>
 					<div class="col-sm-6">
-						<a href="{{ route('customers.create') }}" class="btn btn-success" data-toggle="modal">
+						<a href="{{ route('customers.create') }}" class="btn btn-success">
                             <i class="material-icons">&#xE147;</i> 
                             <span>Tambah</span>
                         </a>
-						<!-- <a href="#deleteModal" class="btn btn-danger" data-toggle="modal">
-                            <i class="material-icons">&#xE15C;</i> 
-                            <span>Delete</span>
-                        </a>						 -->
 					</div>
                 </div>
             </div>
@@ -64,13 +60,15 @@
                         <td>{{$c->status_nikah}}</td>
                         <td>{{$c->gaji}}</td>
                         <td>
-                            <!-- <a href="#viewModal" class="view" title="View" data-toggle="tooltip">
+                            <a href="{{ route('customers.show', $c->customer_id) }}" class="view" title="View">
                                 <i class="material-icons">&#xE417;</i>
-                            </a> -->
-                            <a href="{{ route('customers.edit') }}" class="edit" data-toggle="modal">
+                            </a>
+                            <a href="{{ route('customers.edit', $c->customer_id) }}" class="edit">
                                 <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                             </a>
-                            <a href="{{ route('customers.delete') }}" class="delete" data-toggle="modal">
+                            @csrf
+                            @method('DELETE')
+                            <a href="#" class="delete">
                                 <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
                             </a>
                         </td>
@@ -86,9 +84,8 @@
         </div>
     </div>
 
-
-	<!-- Add Modal HTML -->
-	<div id="addModal" class="modal fade">
+    <!-- Add Modal HTML -->
+	<!-- <div id="addModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form action="{{ route('customers.create') }}" method="POST">
@@ -188,7 +185,7 @@
 				</form>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 
 	<!-- Edit Modal HTML -->

@@ -17,10 +17,10 @@ class CustomersSQLController extends Controller
      */
     public function index(): View
     {
-        //get posts
+        //get 
         $customers = Customers::latest()->paginate(10);
 
-        //render view with posts
+        //render view 
         return view('customers.index', compact('customers'));
     }
 
@@ -53,7 +53,7 @@ class CustomersSQLController extends Controller
             'gaji'              => 'required',
         ]);
 
-        //create post
+        //create 
         Customers::create([
             'customer_id'       => $request->customer_id,
             'nama_customer'     => $request->nama_customer,
