@@ -68,7 +68,7 @@
                             </a>
                             @csrf
                             @method('DELETE')
-                            <a href="#" class="delete">
+                            <a class="delete">
                                 <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
                             </a>
                         </td>

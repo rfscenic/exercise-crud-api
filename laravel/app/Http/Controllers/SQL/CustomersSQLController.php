@@ -69,5 +69,21 @@ class CustomersSQLController extends Controller
         return redirect()->route('customers.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
+
+    /**
+     * show
+     *
+     * @param  mixed $id
+     * @return View
+     */
+    public function show(string $customer_id): View
+    {
+        //get post by customer_id
+        $c = Customers::findOrFail($customer_id);
+
+        //render view with customers
+        return view('customers.show', compact('c'));
+    }
+
     
 }

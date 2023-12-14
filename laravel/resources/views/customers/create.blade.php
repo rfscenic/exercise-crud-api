@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Data Post - SantriKoding.com</title>
+    <title>Tambah Data Customer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body style="background: lightgray">
@@ -18,7 +18,10 @@
                         
                         <div class="modal-header">						
 						<h4 class="modal-title">Tambah Customer</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<!-- <button href="{{ route('customers.index') }}" type="button" class="close" aria-hidden="true">&times;</button> -->
+                        <a href="{{ route('customers.index') }}" class="btn btn-sm btn-danger">
+                            <span>X</span>
+                        </a>
 					</div>
 
                     @csrf
