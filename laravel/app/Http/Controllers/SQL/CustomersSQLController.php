@@ -108,7 +108,7 @@ class CustomersSQLController extends Controller
      * @param  mixed $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
         //validate form
         $this->validate($request, [
@@ -123,6 +123,28 @@ class CustomersSQLController extends Controller
 
         //get data by ID
         $c = Customers::findOrFail($id);
+
+        if($request->customer_id){
+            $c->update([
+                'customer_id'     => $request->customer_id,
+                'nama_customer'   => $request->nama_customer,
+                'Tanggal_lahir'   => $request->Tanggal_lahir,
+                'Provinsi_alamat' => $request->Provinsi_alamat,
+                'jenis_kelamin'   => $request->jenis_kelamin,
+                'status_nikah'    => $request->status_nikah,
+                'gaji'            => $request->gaji,
+            ]);
+        }else{
+            $c->update([
+                // 'customer_id'     => $request->customer_id,
+                'nama_customer'   => $request->nama_customer,
+                'Tanggal_lahir'   => $request->Tanggal_lahir,
+                'Provinsi_alamat' => $request->Provinsi_alamat,
+                'jenis_kelamin'   => $request->jenis_kelamin,
+                'status_nikah'    => $request->status_nikah,
+                'gaji'            => $request->gaji,
+            ]);
+        }
 
         //redirect to index
         return redirect()->route('customers.index')->with(['success' => 'Data Berhasil Diubah!']);

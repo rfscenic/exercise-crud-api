@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
-            $table->char('nama_customer');
+            $table->char('nama_customer', 50);
             $table->date('Tanggal_lahir');
-            $table->char('Provinsi_alamat');
+            $table->char('Provinsi_alamat', 30);
             $table->char('jenis_kelamin',1);
-            $table->char('status_nikah');
+            $table->char('status_nikah', 20);
             $table->integer('gaji');
             $table->timestamps();
         });
@@ -27,7 +27,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public function down(): void
     {
+        Schema::dropIfExists('customers');
     }
 };

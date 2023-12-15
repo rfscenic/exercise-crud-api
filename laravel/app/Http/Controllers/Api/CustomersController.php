@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
-    public function create()
-    {
-        return view('customers.create');
-    }
-
-
     /* ==================================================================
                                                 API
     ==================================================================
@@ -28,11 +22,11 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $data = Customers::orderBy('customer_id')->get();
+        $c = Customers::orderBy('customer_id', 'asc')->get();
         return response()->json([
             'status'=>true,
             'message'=>'Data ditemukan',
-            'data'=>$data
+            'data'=>$c
         ], 200);
     }
 
@@ -41,15 +35,15 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        $dataCustomers = new Customers;
+        $c = new Customers;
 
         $rules = [
-            'customer_id'       => 'required|unique:customers',
+            'customer_id'       => 'required',
             'nama_customer'     => 'required',
             'Tanggal_lahir'     => 'required|date',
             'Provinsi_alamat'   => 'required',
             'jenis_kelamin'     => 'required|in:P,L',
-            'status_nikah'      => 'required|in:Kawin, Belum Kawin, Janda/Duda',
+            'status_nikah'      => 'required',
             'gaji'              => 'required',
         ];
 
@@ -62,15 +56,15 @@ class CustomersController extends Controller
             ]);
         }
 
-        $dataCustomers->customer_id     = $request->customer_id;
-        $dataCustomers->nama_customer   = $request->nama_customer;
-        $dataCustomers->Tanggal_lahir   = $request->Tanggal_lahir;
-        $dataCustomers->Provinsi_alamat = $request->Provinsi_alamat;
-        $dataCustomers->jenis_kelamin   = $request->jenis_kelamin;
-        $dataCustomers->status_nikah    = $request->status_nikah;
-        $dataCustomers->gaji            = $request->gaji;
+        $c->customer_id     = $request->customer_id;
+        $c->nama_customer   = $request->nama_customer;
+        $c->Tanggal_lahir   = $request->Tanggal_lahir;
+        $c->Provinsi_alamat = $request->Provinsi_alamat;
+        $c->jenis_kelamin   = $request->jenis_kelamin;
+        $c->status_nikah    = $request->status_nikah;
+        $c->gaji            = $request->gaji;
 
-        $post = $dataCustomers->save();
+        $post = $c->save();
 
         return response()->json([
             'status'=>true,
@@ -81,14 +75,14 @@ class CustomersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customers $id)
+    public function show(string $id)
     {
-        $data = Customers::find($id);
-        if($data){
+        $c = Customers::find($id);
+        if($c){
             return response()->json([
                 'status'=>true,
                 'message'=>'Data ditemukan',
-                'data'=>$data
+                'data'=>$c
             ], 200);
         }else{
             return response()->json([
@@ -101,10 +95,11 @@ class CustomersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customers $id)
+    public function update(Request $request, string $id)
     {
-        $dataCustomers = Customers::find($id);
-        if(empty($dataCustomers)){
+        $c = Customers::find($id);
+
+        if(empty($c)){
             return response()->json([
                 'status'    => false,
                 'message'   => 'Data tidak ditemukan'
@@ -112,16 +107,16 @@ class CustomersController extends Controller
         }
 
         $rules = [
-            'customer_id'       => 'required|unique:customers',
+            'customer_id'       => 'required',
             'nama_customer'     => 'required',
             'Tanggal_lahir'     => 'required|date',
             'Provinsi_alamat'   => 'required',
             'jenis_kelamin'     => 'required|in:P,L',
-            'status_nikah'      => 'required|in:Kawin, Belum Kawin, Janda/Duda',
+            'status_nikah'      => 'required',
             'gaji'              => 'required',
         ];
 
-        $validator = Validator::make($request->all(),$rules);
+        $validator = Validator::make($request->all(), $rules);
         if($validator->fails()) {
             return response()->json([
                 'status'    => false,
@@ -130,36 +125,61 @@ class CustomersController extends Controller
             ]);
         }
 
-        $dataCustomers->customer_id     = $request->customer_id;
-        $dataCustomers->nama_customer   = $request->nama_customer;
-        $dataCustomers->Tanggal_lahir   = $request->Tanggal_lahir;
-        $dataCustomers->Provinsi_alamat = $request->Provinsi_alamat;
-        $dataCustomers->jenis_kelamin   = $request->jenis_kelamin;
-        $dataCustomers->status_nikah    = $request->status_nikah;
-        $dataCustomers->gaji            = $request->gaji;
+        // $c->update([
+        //     'customer_id'     => $request->customer_id,
+        //     'nama_customer'   => $request->nama_customer,
+        //     'Tanggal_lahir'   => $request->Tanggal_lahir,
+        //     'Provinsi_alamat' => $request->Provinsi_alamat,
+        //     'jenis_kelamin'   => $request->jenis_kelamin,
+        //     'status_nikah'    => $request->status_nikah,
+        //     'gaji'            => $request->gaji,
+        // ]);
 
-        $post = $dataCustomers->save();
+        if($request->customer_id){
+            $c->update([
+                'customer_id'     => $request->customer_id,
+                'nama_customer'   => $request->nama_customer,
+                'Tanggal_lahir'   => $request->Tanggal_lahir,
+                'Provinsi_alamat' => $request->Provinsi_alamat,
+                'jenis_kelamin'   => $request->jenis_kelamin,
+                'status_nikah'    => $request->status_nikah,
+                'gaji'            => $request->gaji,
+            ]);
+        }else{
+            $c->update([
+                // 'customer_id'     => $request->customer_id,
+                'nama_customer'   => $request->nama_customer,
+                'Tanggal_lahir'   => $request->Tanggal_lahir,
+                'Provinsi_alamat' => $request->Provinsi_alamat,
+                'jenis_kelamin'   => $request->jenis_kelamin,
+                'status_nikah'    => $request->status_nikah,
+                'gaji'            => $request->gaji,
+            ]);
+        }
+
+        $post = $c->save();
 
         return response()->json([
             'status'=>true,
-            'message'=>'Berhasil melakukan update data'
+            'message'=>'Berhasil melakukan update data',
+            'data' =>$c
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customers $id)
+    public function destroy(string $id)
     {
-        $dataCustomers = Customers::find($id);
-        if(empty($dataCustomers)){
+        $c = Customers::find($id);
+        if(empty($c)){
             return response()->json([
                 'status'    => false,
                 'message'   => 'Data tidak ditemukan'
             ], 404);
         }
 
-        $post = $dataCustomers->delete();
+        $post = $c->delete();
 
         return response()->json([
             'status'=>true,
